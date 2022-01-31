@@ -1,4 +1,4 @@
-# sevBanking
+# REST Banking Services
 
 # Technologystack
 
