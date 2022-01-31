@@ -100,10 +100,10 @@ public class V1GiroAccountController {
 			throw new IdNotFoundException("Id not found.");
 		}
 		
-//		if(!auth.getCredentials().equals(String.valueOf(databaseGiroAccount.getPin()))) {
-//			throw new PinIncorrectException("Pin not valid");
-//		}
-//		
+		if(!auth.getCredentials().equals(String.valueOf(databaseGiroAccount.getPin()))) {
+			throw new PinIncorrectException("Pin not valid");
+		}
+		
 		if((databaseGiroAccount.getBalance()+transaction.getAmount())<(databaseGiroAccount.getDispoLimit()*-1)){
 			throw new DispoLimitPassedException("Dispo limit passed.");
 		}
