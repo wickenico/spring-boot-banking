@@ -4,19 +4,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Exception which is thrown when the database id isnt found
+ * Exception which is thrown when the authorization of HTTP failed
+ * 
  * @author nicowickersheim
- * @date 29.11.2022
  */
-@ResponseStatus(code=HttpStatus.FORBIDDEN, reason = "PIN not valid")
-public class PinIncorrectException extends Exception{
+
+@ResponseStatus(code = HttpStatus.FORBIDDEN, reason = "PIN not valid")
+public class PinIncorrectException extends Exception {
 
 	/**
 	 * Constructor
+	 * 
 	 * @param msg
 	 */
 	public PinIncorrectException(String msg) {
 		super(msg);
 	}
-	
+
 }

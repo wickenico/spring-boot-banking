@@ -11,6 +11,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
+/**
+ * Generator for random creditcard numbers
+ * 
+ * @author nicowickersheim
+ *
+ */
+
 public class CreditcardNumberGenerator implements IdentifierGenerator {
 
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {

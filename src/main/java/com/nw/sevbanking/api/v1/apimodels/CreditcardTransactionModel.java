@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Model for Account Transaction
+ * Model for Creditcard Transaction
  * 
  * @author nicowickersheim
  *
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AccountTransactionModel {
+public class CreditcardTransactionModel {
 
 	/**
 	 * Amount for the transaction

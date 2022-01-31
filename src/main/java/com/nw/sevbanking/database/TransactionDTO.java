@@ -13,6 +13,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Transaction database class
+ * @author nicowickersheim
+ *
+ */
+
 @Getter
 @Setter
 @Entity

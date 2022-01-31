@@ -2,10 +2,8 @@ package com.nw.sevbanking.database;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -16,8 +14,9 @@ import lombok.Setter;
 /**
  * Credit card class
  * @author nicowickersheim
- * @date 29.11.2022
+ * 
  */
+
 @Getter
 @Setter
 @Entity
@@ -36,6 +35,11 @@ public class CreditcardDTO {
 	 * Credit limit for this creditcard
 	 */
 	private long creditLimit;
+	
+	/**
+	 * Output amount for this creditcard which is transfered to giro account
+	 */
+	private long outputAmount = 0;
 	
 	/**
 	 * Related giro account for this creditcard

@@ -26,7 +26,7 @@ import lombok.Setter;
  * --> Every table which inherits from this abstract class generates a own database table
  * --> Annotation MappedSuperClass is used (no separate account table should exist in the database)
  * @author nicowickersheim
- * @date 29.01.2022
+ * 
  */
 @MappedSuperclass
 @Getter

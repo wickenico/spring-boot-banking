@@ -11,8 +11,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
+/**
+ * Generator for random account ids
+ * 
+ * @author nicowickersheim
+ *
+ */
+
 public class AccountIdGenerator implements IdentifierGenerator {
-	
+
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 
 		Connection connection = session.connection();
@@ -20,16 +27,16 @@ public class AccountIdGenerator implements IdentifierGenerator {
 		try {
 			Statement statement = connection.createStatement();
 
-			ResultSet rs = statement.executeQuery("SELECT (SELECT COUNT(*) FROM `sev-banking-nw`.giro_accounts ) + ( SELECT COUNT(*) FROM `sev-banking-nw`.fixed_deposit_accounts )");
+			ResultSet rs = statement.executeQuery(
+					"SELECT (SELECT COUNT(*) FROM `sev-banking-nw`.giro_accounts ) + ( SELECT COUNT(*) FROM `sev-banking-nw`.fixed_deposit_accounts )");
 
 			if (rs.next()) {
 				Random rand = new Random();
-			    long id = 1000000000;
-			    for (int i = 0; i < 14; i++)
-			    {
-			        int n = rand.nextInt(100000000) + 0;
-			        id += n;
-			    }
+				long id = 1000000000;
+				for (int i = 0; i < 14; i++) {
+					int n = rand.nextInt(100000000) + 0;
+					id += n;
+				}
 				return id;
 			}
 		} catch (SQLException e) {

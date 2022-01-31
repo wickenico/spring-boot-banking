@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository;
 import com.nw.sevbanking.database.CreditcardDTO;
 
 /**
+ * Interface for the creditcard repository
  * 
  * @author nicowickersheim
- * @date 29.01.2022
  *
  */
 
 @Repository
-public interface ICreditcardRepository extends JpaRepository<CreditcardDTO, Long>  {
+public interface ICreditcardRepository extends JpaRepository<CreditcardDTO, Long> {
 
 }

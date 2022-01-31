@@ -16,7 +16,7 @@ import lombok.Setter;
 /**
  * Fixed deposit account class
  * @author nicowickersheim
- * @date 29.01.2022
+ * 
  */
 @Getter
 @Setter

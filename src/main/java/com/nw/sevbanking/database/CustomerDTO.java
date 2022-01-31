@@ -6,10 +6,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -22,7 +19,7 @@ import lombok.Setter;
  * Customer Class 
  * Represents the DTO (Database Table Object)
  * @author nicowickersheim
- * @date 29.01.2022
+ * 
  */
 @Getter
 @Setter

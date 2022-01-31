@@ -16,6 +16,12 @@ import org.springframework.stereotype.Component;
 import com.nw.sevbanking.database.CustomerDTO;
 import com.nw.sevbanking.repository.ICustomerRepository;
 
+/**
+ * Authentication Settings for HTTP Connection
+ * 
+ * @author nicowickersheim
+ *
+ */
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -30,12 +36,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String pin = authentication.getCredentials().toString();
 
 		try {
+			// Check if the customer passed in Username exists
 			CustomerDTO customer = customerRepository.findById(Long.parseLong(id)).orElseThrow();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new BadCredentialsException(id);
 		}
-		
+
 		Collection<? extends GrantedAuthority> authorities = Collections
 				.singleton(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
 

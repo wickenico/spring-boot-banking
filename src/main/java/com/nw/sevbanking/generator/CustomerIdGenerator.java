@@ -10,8 +10,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
+/**
+ * Generator for random customer ids
+ * 
+ * @author nicowickersheim
+ *
+ */
+
 public class CustomerIdGenerator implements IdentifierGenerator {
-	
+
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 
 		Connection connection = session.connection();
