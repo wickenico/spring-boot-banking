@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,5 +35,6 @@ public class FixedDepositAccountDTO extends Account{
 	 * Users for a account
 	 */
 	@ManyToMany(mappedBy = "fixedDepositAccounts")
+	@JsonBackReference
 	private List<CustomerDTO> customers = new ArrayList<>();
 }

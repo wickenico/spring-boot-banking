@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -35,14 +38,16 @@ public abstract class Account {
 	 * Primary key of the database table
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name = "account_id", strategy = "com.nw.sevbanking.generator.AccountIdGenerator")
+	@GeneratedValue(generator = "account_id", strategy = GenerationType.IDENTITY) 
+	@Column(insertable = false, updatable = false)
 	private long accountId;
 	
 	/**
 	 * Actual balance of the account in cent
 	 * Used long because float and double generates error in rounding of floating numbers
 	 */
-	private long balance;
+	private long balance = 0;
 	
 	/**
 	 * Name of the account

@@ -26,6 +26,7 @@ import com.nw.sevbanking.exception.PinIncorrectException;
 import com.nw.sevbanking.repository.ICustomerRepository;
 import com.nw.sevbanking.repository.IGiroAccountRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -44,6 +45,7 @@ public class V1GiroAccountController {
 	 * @param giroAccount
 	 * @return Giro Account DTO
 	 */
+	@Operation(summary = "Create a giroaccount with random acoount id.")
 	@PostMapping(consumes= {"application/json"})
 	public GiroAccountDTO CreateGiroAccount(@RequestBody GiroAccountDTO giroAccount) {
 		giroAccount.setBalance(0);
@@ -76,11 +78,15 @@ public class V1GiroAccountController {
 	 */
 	@PutMapping(value="{id}")
 	public GiroAccountDTO UpdateGiroAccount(@PathVariable long id, @RequestBody GiroAccountDTO giroAccount) throws IdNotFoundException {
-		Optional<GiroAccountDTO> databaseGiroAccount = giroAccountRepository.findById(id);
-		if(databaseGiroAccount.isPresent()) {
-			giroAccountRepository.save(giroAccount);
-		}
-		throw new IdNotFoundException("No giro account with the id " + id + " found.");
+		GiroAccountDTO databaseGiroAccount = giroAccountRepository.findById(id).orElseThrow(() ->  new IdNotFoundException("No giro account with the id " + id + " found."));
+
+		databaseGiroAccount.setAccountName(giroAccount.getAccountName());
+		databaseGiroAccount.setBalance(giroAccount.getBalance());
+		databaseGiroAccount.setPin(giroAccount.getPin());
+		databaseGiroAccount.setDispoLimit(giroAccount.getDispoLimit());
+		
+		giroAccountRepository.save(databaseGiroAccount);
+	    return databaseGiroAccount;
 	}
 	
 	@PostMapping(value="{id}/transaction")
@@ -93,15 +99,11 @@ public class V1GiroAccountController {
 		if(!giroAccountRepository.existsByAccountIdAndCustomers_customerId(databaseGiroAccount.getAccountId(), customer.getCustomerId())) {
 			throw new IdNotFoundException("Id not found.");
 		}
-	
-//		if(transaction.getPin()!=tempGiroAccount.getPin()) {
+		
+//		if(!auth.getCredentials().equals(String.valueOf(databaseGiroAccount.getPin()))) {
 //			throw new PinIncorrectException("Pin not valid");
 //		}
-		
-		if(!auth.getCredentials().equals(String.valueOf(databaseGiroAccount.getPin()))) {
-			throw new PinIncorrectException("Pin not valid");
-		}
-		
+//		
 		if((databaseGiroAccount.getBalance()+transaction.getAmount())<(databaseGiroAccount.getDispoLimit()*-1)){
 			throw new DispoLimitPassedException("Dispo limit passed.");
 		}

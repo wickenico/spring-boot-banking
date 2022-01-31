@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +34,8 @@ public class CustomerDTO {
 	 * Customer ID (Primary Key for the Database)
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name = "customer_id", strategy = "com.nw.sevbanking.generator.CustomerIdGenerator")
+	@GeneratedValue(generator = "customer_id")  
 	private long customerId;
 	
 	/**

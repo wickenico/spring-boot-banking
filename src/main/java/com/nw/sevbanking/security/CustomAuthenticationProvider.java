@@ -2,7 +2,6 @@ package com.nw.sevbanking.security;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.nw.sevbanking.database.CustomerDTO;
 import com.nw.sevbanking.repository.ICustomerRepository;
 
+
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
@@ -26,7 +26,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		String id = authentication.getName();
+		String id = authentication.getName().toString();
 		String pin = authentication.getCredentials().toString();
 
 		try {

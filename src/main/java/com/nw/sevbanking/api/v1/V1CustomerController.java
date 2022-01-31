@@ -71,13 +71,19 @@ public class V1CustomerController {
 	 * @return
 	 * @throws IdNotFoundException - HTTP Status Code 404 ID not found
 	 */
-	@PutMapping(value="{id}")
+	@PutMapping(value="/{id}")
 	public CustomerDTO UpdateUser(@PathVariable long id, @RequestBody CustomerDTO customer) throws IdNotFoundException {
-		Optional<CustomerDTO> databaseCustomer = customerRepository.findById(id);
-		if(databaseCustomer.isPresent()) {
-            customerRepository.save(customer);
-		}
-		throw new IdNotFoundException("No customer with the id " + id + " found.");
+		CustomerDTO databaseCustomer = customerRepository.findById(id).orElseThrow(() -> new IdNotFoundException("No customer with the id " + id + " found."));
+			
+		databaseCustomer.setCustomerId(id);
+		databaseCustomer.setFirstName(customer.getFirstName());
+		databaseCustomer.setName(customer.getName());
+		databaseCustomer.setBirthdate(customer.getBirthdate());
+		databaseCustomer.setGiroAccounts(customer.getGiroAccounts());
+		databaseCustomer.setFixedDepositAccounts(customer.getFixedDepositAccounts());
+			
+	    customerRepository.save(databaseCustomer);
+	    return databaseCustomer;
 	}
 	
 	
@@ -110,6 +116,12 @@ public class V1CustomerController {
 	    	tempDepositAccounts.add(tempDepositAccount);
 	    }else {
 	    	List<FixedDepositAccountDTO> tempDepositAccounts = tempCustomer.getFixedDepositAccounts();
+	    	
+	    	if (tempDepositAccounts.contains(tempDepositAccount)) {
+	    		throw new IdNotFoundException("Object already in List");
+		
+	    	}
+	    	
 	    	tempDepositAccounts.add(tempDepositAccount);
 	    }
 	    
@@ -128,32 +140,34 @@ public class V1CustomerController {
 	 */
 	@PutMapping(value= "{customerId}/giroaccount/{giroAccountId}")
 	public CustomerDTO AddGiroAccountToCustomer(@PathVariable long customerId, @PathVariable long giroAccountId) throws IdNotFoundException {
-		Optional<CustomerDTO> databaseCustomer = customerRepository.findById(customerId);
-		
-		
-		if(databaseCustomer.isEmpty()) {
-			throw new IdNotFoundException("No customer with the id "+ customerId +" found.");
-		}
+		CustomerDTO databaseCustomer = customerRepository.findById(customerId).orElseThrow(() -> new IdNotFoundException("No customer with the id "+ customerId +" found."));
 		
 		Optional<GiroAccountDTO> databaseGiroAccount = giroAccountRepository.findById(giroAccountId);
 		if(databaseGiroAccount.isEmpty()) {
 			throw new IdNotFoundException("No fixed deposit account with the id " + giroAccountId + " found.");
 		}
+		
 
-		var tempCustomer = databaseCustomer.get();
 		var tempGiroAccount = databaseGiroAccount.get();
 		
-	    if(tempCustomer.getGiroAccounts()==null) {
+	    if(databaseCustomer.getGiroAccounts()==null) {
 	    	List<GiroAccountDTO> tempGiroAccounts = new ArrayList<>();
 	    	tempGiroAccounts.add(tempGiroAccount);
 	    }else {
-	    	List<GiroAccountDTO> tempGiroAccounts = tempCustomer.getGiroAccounts();
+	    	
+	    	List<GiroAccountDTO> tempGiroAccounts = databaseCustomer.getGiroAccounts();
+    		
+	    	if (tempGiroAccounts.contains(tempGiroAccount)) {
+	    		throw new IdNotFoundException("Object already in List");
+		
+	    	}
+	    	
 	    	tempGiroAccounts.add(tempGiroAccount);
 	    }
 	    
-	    customerRepository.save(tempCustomer);
+	    customerRepository.save(databaseCustomer);
 	    
-	    return tempCustomer;
+	    return databaseCustomer;
 	
 	}
 	

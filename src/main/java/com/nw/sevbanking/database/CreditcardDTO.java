@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +28,8 @@ public class CreditcardDTO {
 	 * Primary key for the creditcard (creditcard number)
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name = "creditcard_number", strategy = "com.nw.sevbanking.generator.CreditcardNumberGenerator")
+	@GeneratedValue(generator = "creditcard_number") 
 	private long creditcardNumber;
 	
 	/**
