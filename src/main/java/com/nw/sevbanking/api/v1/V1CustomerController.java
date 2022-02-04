@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nw.sevbanking.database.CustomerDTO;
@@ -73,6 +74,11 @@ public class V1CustomerController {
 		}
 
 		throw new IdNotFoundException("No customer with the " + id + " found.");
+	}
+	
+	@GetMapping
+	public @ResponseBody List<CustomerDTO> getAllCustomers() {
+		return customerRepository.findAll();
 	}
 
 	/**
